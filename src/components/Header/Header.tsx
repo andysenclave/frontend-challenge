@@ -15,11 +15,11 @@ const Subtitle = ({ text }) => text ? <SecondTitle>{ text }</SecondTitle> : null
 
 const header = (props: HeaderProps) => (
   <Container>
+    <Logo />
     <Title>
       { props.title }
     </Title>
     <Subtitle text={ props.content }/>
-    <Logo />
   </Container>
 )
 

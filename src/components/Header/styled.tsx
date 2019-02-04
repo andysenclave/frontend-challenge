@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import racingFlag from './assets/racingFlag.svg';
+import racingFlag from '../../assets/racingFlag.svg';
 
 export const Container = styled.div`
   display: flex;
