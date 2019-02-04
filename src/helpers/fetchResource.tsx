@@ -3,7 +3,7 @@ import axios from 'axios';
 
 interface fetchResourceProps {
   url: string,
-  props: Object
+  props?: Object
 };
 
 const fetchResource = ({ url, props }: fetchResourceProps) => (Content) => {
