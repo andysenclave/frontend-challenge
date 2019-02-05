@@ -5,6 +5,7 @@
   "main": "src/index.tsx",
   "scripts": {
     "lint": "eslint src --ext .tsx --ext .ts --ext .js",
+    "lint:fix": "eslint src --ext .tsx --ext .ts --ext .js --fix",
     "start": "webpack-dev-server --mode development --open --hot",
     "test": "jest --watch",
     "build": "npm run lint && jest && rimraf dist && webpack --mode production"
@@ -43,7 +44,11 @@
     "axios": "^0.18.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-saga": "^1.0.1",
     "styled-components": "^4.1.3"
   }
 }
