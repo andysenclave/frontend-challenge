@@ -14,7 +14,7 @@ export const Title = styled.h1`
   color: palevioletred;
 `;
 
-export const SecondTitle = styled.h2`
+export const Subtitle = styled.h2`
   font-size: 1em;
   color: brown;
 `;

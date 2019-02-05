@@ -1,24 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { urls } from '../constants/app.config';
-import fetchResource from '../helpers/fetchResource';
+import SeasonResultsModel from '../models/seasonResult';
+import { fetchSeasonResult } from '../store/actions/leaderboard';
 import Wrapper from '../components/Wrapper/Wrapper';
 import Header from '../components/Header/Header';
+import Item from '../components/List/Item/Item';
+import Trophy from '../assets/trophy.svg';
 
-// const SeasonsResultList = (props) => fetchResource({
-//   url: urls.seasonResult,
-//   props
-// })(List);
-
+interface RouteParams {
+  params: {
+    year: string
+  }
+}
 interface SeasonResultsProps {
-  winner: string
+  seasonChampionCode: string,
+  results: SeasonResultsModel[],
+  getSeasonResult: Function,
+  match: RouteParams
 }
 
-const seasonResult = ({ winner }: SeasonResultsProps) =>  (
-  <Wrapper>
-    <Header title={`Season result`}/>
-    {/* <SeasonsResultList winner={winner}/> */}
-  </Wrapper>
-);
+const ItemList = ({ items, seasonChampionCode }) => items.map(options => (
+  <Item
+    key={options.raceName}
+    title={options.winner}
+    subtext={options.raceName}
+    highlight={seasonChampionCode === options.winnerCode}
+    icon={seasonChampionCode === options.winnerCode ? Trophy : undefined}
+  />
+));
 
-export default seasonResult;
+class SeasonResults extends Component<SeasonResultsProps> {
+  componentDidMount() {
+    const { getSeasonResult, match: { params } } = this.props;
+
+    getSeasonResult(params.year);
+  }
+
+  render() {
+    const { results, seasonChampionCode } = this.props;
+
+    return (
+      <Wrapper>
+        <Header title="Leaderboard" />
+        <Link to="/">Go back to leaderboard</Link>
+        <ItemList items={results} seasonChampionCode={seasonChampionCode} />
+      </Wrapper>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  getSeasonResult: year => dispatch(fetchSeasonResult(year))
+});
+
+const mapStateToProps = ({ leaderboard }) => ({
+  results: leaderboard.seasonResults,
+  seasonChampionCode: leaderboard.championCode
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SeasonResults);

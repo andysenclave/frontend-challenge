@@ -12,29 +12,41 @@ import {
 } from './styled';
 
 interface ItemProps {
-  avatar: string,
+  avatar?: string,
   title: string,
   subtext?: string,
   score?: string,
   scorePercent?: number,
   highlight?: boolean,
-  icon?: string
+  icon?: string,
+  onClick?: Function
 }
 
 const listItem = (props: ItemProps) => {
-  const { icon } = props;
+  const {
+    highlight,
+    icon,
+    onClick,
+    avatar,
+    title,
+    subtext,
+    score,
+    scorePercent
+  } = props;
   return (
-    <ItemWrap active={props.highlight}>
-      <Avatar url={props.avatar}/>
-      <Title>{ props.title }</Title>
-      {props.subtext && <Subtext>{ props.subtext }</Subtext>}
-      {props.score && <Score>{ props.score }</Score>}
-      {props.scorePercent && 
+    <ItemWrap active={highlight} onClick={onClick}>
+      <Avatar url={avatar} />
+      <Title>{ title }</Title>
+      {subtext && <Subtext>{ subtext }</Subtext>}
+      {score && <Score>{ score }</Score>}
+      {scorePercent
+        && (
         <ProgressBarWrapper>
-          <Progress value={ props.scorePercent }/>
+          <Progress value={scorePercent} />
         </ProgressBarWrapper>
+        )
       }
-      {icon ? <Icon source={icon}/> : null}
+      {icon ? <Icon source={icon} /> : null}
     </ItemWrap>
   );
 };

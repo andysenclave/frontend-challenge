@@ -1,31 +1,68 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { urls } from '../constants/app.config';
-import fetchResource from '../helpers/fetchResource';
+import LeaderboardModel from '../models/leaderboard';
+import { fetchLeaderboard, setSeasonChampion } from '../store/actions/leaderboard';
 import Wrapper from '../components/Wrapper/Wrapper';
 import Header from '../components/Header/Header';
-import List from '../components/List/List';
-import Trophy from '../assets/trophy.svg';
+import Item from '../components/List/Item/Item';
+import Arrow from '../assets/arrow.svg';
 
-// const LeaderBoardList = fetchResource({
-//   url: urls.leaderboard
-// })(List);
+interface LeaderboardProps {
+  data: LeaderboardModel[],
+  getLeaderboard: Function,
+  setChampion: Function,
+  history: {
+    push: Function
+  }
+}
 
-const items = [{
-  avatar: 'https://via.placeholder.com/64x64?text=AM',
-  title: 'Anindya Mukherjee',
-  subtext: '2013',
-  score: '8/10',
-  scorePercent: 77,
-  highlight: true,
-  icon: Trophy
-}]
+const LinkList = ({ items, onClick }) => items.map(options => (
+  <Item
+    key={options.year}
+    avatar={`${urls.placeholder}${options.code}`}
+    title={options.champion}
+    subtext={options.year}
+    score={options.wins}
+    scorePercent={options.winPercent}
+    icon={Arrow}
+    onClick={() => onClick(options.code, options.year)}
+  />
+));
+class Leaderboard extends Component<LeaderboardProps> {
+  componentDidMount() {
+    const { data, getLeaderboard } = this.props;
 
-const leaderboard = () =>  (
-  <Wrapper>
-    <Header title={`Leaderboard`}/>
-    <List items={items}/>
-  </Wrapper>
-);
+    if (data.length === 0) {
+      getLeaderboard();
+    }
+  }
 
-export default leaderboard;
+  handleClick = (code, year) => {
+    const { setChampion, history } = this.props;
+    setChampion(code);
+    history.push(`/results/${year}`);
+  }
+
+  render() {
+    const { data } = this.props;
+    return (
+      <Wrapper>
+        <Header title="Leaderboard" />
+        <LinkList items={data} onClick={this.handleClick} />
+      </Wrapper>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  getLeaderboard: () => dispatch(fetchLeaderboard()),
+  setChampion: code => dispatch(setSeasonChampion(code))
+});
+
+const mapStateToProps = ({ leaderboard }) => ({
+  data: leaderboard.data,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Leaderboard);

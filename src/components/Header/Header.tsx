@@ -2,25 +2,25 @@ import React from 'react';
 import {
   Container,
   Logo,
-  SecondTitle,
+  Subtitle,
   Title,
 } from './styled';
 
 interface HeaderProps {
   title: string,
   content?: string
-};
+}
 
-const Subtitle = ({ text }) => text ? <SecondTitle>{ text }</SecondTitle> : null;
-
-const header = (props: HeaderProps) => (
+const header = ({ title, content }: HeaderProps) => (
   <Container>
     <Logo />
     <Title>
-      { props.title }
+      { title }
     </Title>
-    <Subtitle text={ props.content }/>
+    <Subtitle>
+      { content }
+    </Subtitle>
   </Container>
-)
+);
 
 export default header;

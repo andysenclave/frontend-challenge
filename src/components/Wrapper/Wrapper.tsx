@@ -13,9 +13,9 @@ interface WrapperProps {
   children: ReactNode;
 }
 
-const wrapper = (props: WrapperProps) => (
+const wrapper = ({ children }: WrapperProps) => (
   <WrapElement>
-    { props.children }
+    { children }
   </WrapElement>
 );
 
