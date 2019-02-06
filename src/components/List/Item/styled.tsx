@@ -52,7 +52,7 @@ export const ProgressBarWrapper = styled.div`
 `;
 export const Progress = styled.div`
   height: 12px;
-  width: ${props => props.value + '%'};
+  width: ${props => `${props.value}%`};
   background: #8BC34A;
   border-radius: 6px;
 `;

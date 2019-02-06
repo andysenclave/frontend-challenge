@@ -33,7 +33,7 @@ const listItem = (props: ItemProps) => {
     score,
     scorePercent
   } = props;
-  console.log(icon);
+
   return (
     <ItemWrap active={highlight} onClick={onClick}>
       {avatar && <Avatar src={avatar} />}

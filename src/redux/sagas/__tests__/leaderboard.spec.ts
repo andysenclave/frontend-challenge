@@ -3,17 +3,17 @@ import { cloneableGenerator } from '@redux-saga/testing-utils';
 
 import {
   fetchSeasonResult as seasonResultActionCreator
-} from '../../../src/redux/actions/leaderboard';
+} from '../../actions/leaderboard';
 
 import {
   fetchLeaderboard,
   fetchSeasonResults
-} from '../../../src/redux/sagas/leaderboard';
+} from '../leaderboard';
 
 import {
   getLeaderboard,
   getSeasonResults
-} from '../../../src/helpers/fetchResource';
+} from '../../../helpers/fetchResource';
 
 const selectedSeason = '2013';
 const seasonResultAction = seasonResultActionCreator(selectedSeason);

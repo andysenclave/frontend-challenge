@@ -21,6 +21,13 @@ interface LeaderboardProps {
   }
 }
 
+interface ContentProps {
+  data: LeaderboardModel[],
+  fetchError: boolean,
+  errorMessage: string,
+  onClick: Function
+}
+
 const LinkList = ({ items, onClick }) => items.map(options => (
   <Item
     key={options.year}
@@ -34,13 +41,14 @@ const LinkList = ({ items, onClick }) => items.map(options => (
   />
 ));
 
-const Content = ({ data, fetchError, errorMessage, onClick }) => {
+const Content = ({
+  data, fetchError, errorMessage, onClick
+}: ContentProps) => {
   if (fetchError) {
-    return <DisplayError message={errorMessage}/>;
-  } else {
-    return <LinkList items={data} onClick={onClick} />
+    return <DisplayError message={errorMessage} />;
   }
-}
+  return <LinkList items={data} onClick={onClick} />;
+};
 class Leaderboard extends Component<LeaderboardProps> {
   componentDidMount() {
     const { data, getLeaderboard } = this.props;

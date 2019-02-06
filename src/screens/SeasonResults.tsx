@@ -23,6 +23,13 @@ interface SeasonResultsProps {
   match: RouteParams
 }
 
+interface ContentProps{
+  seasonChampionCode: string,
+  results: SeasonResultsModel[],
+  fetchError: boolean,
+  errorMessage: string
+}
+
 const ItemList = ({ items, seasonChampionCode }) => items.map(options => (
   <Item
     key={options.raceName}
@@ -32,12 +39,13 @@ const ItemList = ({ items, seasonChampionCode }) => items.map(options => (
   />
 ));
 
-const Content = ({ results, fetchError, errorMessage, seasonChampionCode }) => {
+const Content = ({
+  results, fetchError, errorMessage, seasonChampionCode
+}: ContentProps) => {
   if (fetchError) {
-    return <DisplayError message={errorMessage}/>;
-  } else {
-    return <ItemList items={results} seasonChampionCode={seasonChampionCode} />
+    return <DisplayError message={errorMessage} />;
   }
+  return <ItemList items={results} seasonChampionCode={seasonChampionCode} />;
 };
 
 class SeasonResults extends Component<SeasonResultsProps> {

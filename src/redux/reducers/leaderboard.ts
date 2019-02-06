@@ -19,7 +19,7 @@ export interface Props {
   errorMessage: string,
 }
 
-const initialState: Props = {
+export const initialState: Props = {
   data: [],
   seasonResults: [],
   championCode: '',
