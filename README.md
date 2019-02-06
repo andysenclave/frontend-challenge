@@ -1,24 +1,52 @@
-# FinCompare Front-end Challenge
+# F1 Leaderboards
 
-The purpose of this challenge is to let the developer show familiarity and skills with frontend technologies by creating a simple app using what its judges best, regarding patterns, libraries, and architeture.
-
-
-## The Challenge
-
-We'll use the [Ergast API](http://ergast.com/mrd/) to create a single page application that
+I have used the [Ergast API](http://ergast.com/mrd/) to create a single page application that
 presents a list that shows the F1 world champions starting from 2005 until
 2015. Clicking on an item shows the list of the winners for every race for
 the selected year. We also request to highlight the row when the winner
-has been the world champion in the same season.
+has been the world champion in the same season. 
 
-Feel free to create the UI the way you think it's best, just make sure it's clean, understandable and it's a single page application. The main goal here is to check your skills with CSS or whatever you use to style your project.
+## Description
 
-## Delivery
+The app has two views -
 
-Please use Github to send us your challenge, if you could fork this repo would be even better.
+  * Leaderboard - where all winners between 2005 and 2015 are listed,
+  * Season Results - lists winners of all races for a particular season.
 
-## Extra
+The leaderboard contains clickable items in a list which when clicked takes the user to that particular season's results.
 
-- You can use any Javascript library you want, but we would rather if you use React
-- Write a readme file explaining4 what you did, what you used and how to run your project.
+The leaderboard also displays the win percent of the season winners, in a intuitive bar. :)
 
+The app also maintains a presentable layout in mobile devices.
+
+## Technologies used
+
+The app built using my own custom boilerplate
+
+* React,
+* Redux,
+* Redux-saga,
+* Typescript,
+* eslint-airbnb
+* Jest
+* Enyzme
+* Styled-components
+
+
+## Running the project
+
+### npm run start
+
+To start the project in port 3000
+
+### npm run lint
+
+To run eslint, find linting issues in code
+
+### npm run test
+
+To run jest tests
+
+### npm run build
+
+To create a production build. The build process inherently runs `lint` and `test` before building. To make sure there are no errors in build code.
