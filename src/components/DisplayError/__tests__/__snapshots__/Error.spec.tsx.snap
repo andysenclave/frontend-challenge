@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test Error component matches the snapshot 1`] = `
+.c0 {
+  font-size: 1.2em;
+  background: pink;
+  color: red;
+}
+
+<p
+  className="c0"
+>
+  Test message
+</p>
+`;
