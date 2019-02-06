@@ -33,12 +33,13 @@ const listItem = (props: ItemProps) => {
     score,
     scorePercent
   } = props;
+  console.log(icon);
   return (
     <ItemWrap active={highlight} onClick={onClick}>
-      <Avatar url={avatar} />
+      {avatar && <Avatar src={avatar} />}
       <Title>{ title }</Title>
       {subtext && <Subtext>{ subtext }</Subtext>}
-      {score && <Score>{ score }</Score>}
+      {score && <Score>{ score } wins</Score>}
       {scorePercent
         && (
         <ProgressBarWrapper>
@@ -46,7 +47,7 @@ const listItem = (props: ItemProps) => {
         </ProgressBarWrapper>
         )
       }
-      {icon ? <Icon source={icon} /> : null}
+      {icon ? <Icon src={icon} /> : null}
     </ItemWrap>
   );
 };

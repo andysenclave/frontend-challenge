@@ -3,12 +3,12 @@ import { cloneableGenerator } from '@redux-saga/testing-utils';
 
 import {
   fetchSeasonResult as seasonResultActionCreator
-} from '../../../src/store/actions/leaderboard';
+} from '../../../src/redux/actions/leaderboard';
 
 import {
   fetchLeaderboard,
   fetchSeasonResults
-} from '../../../src/store/sagas/leaderboard';
+} from '../../../src/redux/sagas/leaderboard';
 
 import {
   getLeaderboard,

@@ -5,7 +5,7 @@ import LeaderboardModel from '../models/leaderboard';
 import SeasonResultModel from '../models/seasonResult';
 
 // eslint-disable-next-line
-const extractLeaderboard = (res):Array<LeaderboardModel> => {
+const getLeaderboardModelFromData = (res):Array<LeaderboardModel> => {
   const { StandingsLists } = res.data.MRData.StandingsTable;
 
   const leaderboard = StandingsLists.reduce((results, currentResult) => {
@@ -39,7 +39,7 @@ const extractLeaderboard = (res):Array<LeaderboardModel> => {
   return leaderboard;
 };
 
-const extractSeasonResult = (res):Array<SeasonResultModel> => {
+const getSeasonResultModelFromData = (res):Array<SeasonResultModel> => {
   const { Races } = res.data.MRData.RaceTable;
 
   const races = Races.reduce((results, currentResult) => {
@@ -72,11 +72,11 @@ const extractSeasonResult = (res):Array<SeasonResultModel> => {
 export const getLeaderboard = () => {
   const { ergast: { base, leaderboardSuffix } } = urls;
   return axios.get(`${base}${leaderboardSuffix}`)
-    .then(res => extractLeaderboard(res));
+    .then(res => getLeaderboardModelFromData(res));
 };
 
 export const getSeasonResults = (season) => {
   const { ergast: { base, seasonResultSuffix } } = urls;
   return axios.get(`${base}${season}${seasonResultSuffix}`)
-    .then(res => extractSeasonResult(res));
+    .then(res => getSeasonResultModelFromData(res));
 };

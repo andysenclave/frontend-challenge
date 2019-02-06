@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import SeasonResultsModel from '../models/seasonResult';
-import { fetchSeasonResult } from '../store/actions/leaderboard';
+import { fetchSeasonResult } from '../redux/actions/leaderboard';
 import Wrapper from '../components/Wrapper/Wrapper';
 import Header from '../components/Header/Header';
 import Item from '../components/List/Item/Item';
-import Trophy from '../assets/trophy.svg';
+import Link from '../components/Link/link';
+import DisplayError from '../components/DisplayError/Error';
 
 interface RouteParams {
   params: {
@@ -17,6 +17,8 @@ interface RouteParams {
 interface SeasonResultsProps {
   seasonChampionCode: string,
   results: SeasonResultsModel[],
+  error: boolean,
+  errorMessage: string,
   getSeasonResult: Function,
   match: RouteParams
 }
@@ -27,9 +29,16 @@ const ItemList = ({ items, seasonChampionCode }) => items.map(options => (
     title={options.winner}
     subtext={options.raceName}
     highlight={seasonChampionCode === options.winnerCode}
-    icon={seasonChampionCode === options.winnerCode ? Trophy : undefined}
   />
 ));
+
+const Content = ({ results, fetchError, errorMessage, seasonChampionCode }) => {
+  if (fetchError) {
+    return <DisplayError message={errorMessage}/>;
+  } else {
+    return <ItemList items={results} seasonChampionCode={seasonChampionCode} />
+  }
+};
 
 class SeasonResults extends Component<SeasonResultsProps> {
   componentDidMount() {
@@ -39,13 +48,25 @@ class SeasonResults extends Component<SeasonResultsProps> {
   }
 
   render() {
-    const { results, seasonChampionCode } = this.props;
+    const {
+      results,
+      error,
+      errorMessage,
+      seasonChampionCode,
+      match: { params }
+    } = this.props;
+    const title = `${params.year} Season Results`;
 
     return (
       <Wrapper>
-        <Header title="Leaderboard" />
+        <Header title={title} />
         <Link to="/">Go back to leaderboard</Link>
-        <ItemList items={results} seasonChampionCode={seasonChampionCode} />
+        <Content
+          results={results}
+          fetchError={error}
+          errorMessage={errorMessage}
+          seasonChampionCode={seasonChampionCode}
+        />
       </Wrapper>
     );
   }
@@ -57,7 +78,9 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = ({ leaderboard }) => ({
   results: leaderboard.seasonResults,
-  seasonChampionCode: leaderboard.championCode
+  seasonChampionCode: leaderboard.championCode,
+  error: leaderboard.fetchError.seasonResult,
+  errorMessage: leaderboard.errorMessage
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SeasonResults);

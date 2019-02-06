@@ -3,8 +3,10 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   LEADERBOARD_REQUESTED,
   LEADERBOARD_FETCH_SUCCESS,
+  LEADERBOARD_FETCH_ERROR,
   SEASON_RESULT_REQUESTED,
-  SEASON_RESULT_FETCH_SUCCESS
+  SEASON_RESULT_FETCH_SUCCESS,
+  SEASON_RESULT_FETCH_ERROR
 } from '../actionTypes';
 import { getLeaderboard, getSeasonResults } from '../../helpers/fetchResource';
 
@@ -16,10 +18,10 @@ export function* fetchLeaderboard() {
       payload: leaderboard
     });
   } catch (e) {
-    console.error(e);
-    // yield put({
-    //   type: 'STAR_WARS_INCREMENT_FAIL', message: e.message
-    // });
+    yield put({
+      type: LEADERBOARD_FETCH_ERROR,
+      message: 'Error while fetching leaderboard data'
+    });
   }
 }
 
@@ -32,10 +34,10 @@ export function* fetchSeasonResults(action) {
       payload: seasonResult
     });
   } catch (e) {
-    console.error(e);
-    // yield put({
-    //   type: 'STAR_WARS_INCREMENT_FAIL', message: e.message
-    // });
+    yield put({
+      type: SEASON_RESULT_FETCH_ERROR,
+      message: 'Error while fetching season result data'
+    });
   }
 }
 

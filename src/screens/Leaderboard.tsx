@@ -3,14 +3,17 @@ import { connect } from 'react-redux';
 
 import { urls } from '../constants/app.config';
 import LeaderboardModel from '../models/leaderboard';
-import { fetchLeaderboard, setSeasonChampion } from '../store/actions/leaderboard';
+import { fetchLeaderboard, setSeasonChampion } from '../redux/actions/leaderboard';
 import Wrapper from '../components/Wrapper/Wrapper';
 import Header from '../components/Header/Header';
 import Item from '../components/List/Item/Item';
+import DisplayError from '../components/DisplayError/Error';
 import Arrow from '../assets/arrow.svg';
 
 interface LeaderboardProps {
   data: LeaderboardModel[],
+  error: boolean,
+  errorMessage: string,
   getLeaderboard: Function,
   setChampion: Function,
   history: {
@@ -30,6 +33,14 @@ const LinkList = ({ items, onClick }) => items.map(options => (
     onClick={() => onClick(options.code, options.year)}
   />
 ));
+
+const Content = ({ data, fetchError, errorMessage, onClick }) => {
+  if (fetchError) {
+    return <DisplayError message={errorMessage}/>;
+  } else {
+    return <LinkList items={data} onClick={onClick} />
+  }
+}
 class Leaderboard extends Component<LeaderboardProps> {
   componentDidMount() {
     const { data, getLeaderboard } = this.props;
@@ -46,11 +57,16 @@ class Leaderboard extends Component<LeaderboardProps> {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, error, errorMessage } = this.props;
     return (
       <Wrapper>
         <Header title="Leaderboard" />
-        <LinkList items={data} onClick={this.handleClick} />
+        <Content
+          data={data}
+          fetchError={error}
+          errorMessage={errorMessage}
+          onClick={this.handleClick}
+        />
       </Wrapper>
     );
   }
@@ -63,6 +79,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = ({ leaderboard }) => ({
   data: leaderboard.data,
+  error: leaderboard.fetchError.leaderboard,
+  errorMessage: leaderboard.errorMessage
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Leaderboard);
