@@ -6,9 +6,11 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, '/dist'),
+    publicPath: '/'
   },
   devServer: {
-    port: 3000
+    port: 3000,
+    historyApiFallback: true,
   },
   devtool: 'source-map',
   resolve: {
@@ -16,12 +18,12 @@ module.exports = {
   },
   module: {
     rules: [
-      { 
+      {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         loader: 'awesome-typescript-loader'
       },
-      { 
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
