@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
 
 import {
   LEADERBOARD_REQUESTED,
@@ -9,7 +8,7 @@ import {
 } from '../actionTypes';
 import { getLeaderboard, getSeasonResults } from '../../helpers/fetchResource';
 
-function* fetchLeaderboard() {
+export function* fetchLeaderboard() {
   try {
     const leaderboard = yield call(getLeaderboard);
     yield put({
@@ -24,7 +23,7 @@ function* fetchLeaderboard() {
   }
 }
 
-function* fetchSeasonResults(action) {
+export function* fetchSeasonResults(action) {
   const season = action.payload;
   try {
     const seasonResult = yield call(getSeasonResults, season);
